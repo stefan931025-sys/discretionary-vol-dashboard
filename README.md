@@ -1,3 +1,5 @@
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/stefan931025-sys/discretionary-vol-dashboard)
+
 # 📈 Discretionary Volatility Trading Dashboard & Option Mispricing Engine
 
 An institutional-grade decision-support engine designed for discretionary options and volatility traders. The system models underlying asset variance using a hybrid **GARCH(1,1)** statistical model and an **LSTM (Long Short-Term Memory)** neural network to forecast realized volatility ($\sigma_{\text{forecast}}$), comparing it in real time against market Implied Volatility ($\sigma_{\text{implied}}$) to identify actionable option mispricing setups.

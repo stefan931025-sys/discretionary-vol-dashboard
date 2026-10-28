@@ -5,8 +5,8 @@ from src.vol_engine import DiscretionaryVolEngine
 
 
 def test_discretionary_vol_engine_initialization():
-    """Validates that DiscretionaryVolEngine initializes correctly with a ticker."""
-    engine = DiscretionaryVolEngine(ticker="NDAQ")
+    """Validates that DiscretionaryVolEngine initializes correctly with ticker and start_date."""
+    engine = DiscretionaryVolEngine(ticker="NDAQ", start_date="2022-01-01")
     assert engine.ticker == "NDAQ"
     assert isinstance(engine.returns, pd.Series)
     assert not engine.returns.empty
@@ -14,7 +14,7 @@ def test_discretionary_vol_engine_initialization():
 
 def test_fit_garch():
     """Validates that fit_garch returns a valid next-day GARCH volatility forecast float."""
-    engine = DiscretionaryVolEngine(ticker="NDAQ")
+    engine = DiscretionaryVolEngine(ticker="NDAQ", start_date="2022-01-01")
     next_day_vol = engine.fit_garch()
     
     assert isinstance(next_day_vol, float)
@@ -23,7 +23,7 @@ def test_fit_garch():
 
 def test_generate_trader_signals():
     """Validates that generate_trader_signals returns the expected dictionary structure and keys."""
-    engine = DiscretionaryVolEngine(ticker="NDAQ")
+    engine = DiscretionaryVolEngine(ticker="NDAQ", start_date="2022-01-01")
     signal_output = engine.generate_trader_signals(current_implied_vol=0.25)
     
     assert isinstance(signal_output, dict)

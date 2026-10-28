@@ -1,8 +1,9 @@
-streamlit
-pandas
 numpy
-matplotlib
+pandas
 yfinance
 arch
+scikit-learn
 tensorflow
-rich
+streamlit
+plotly
+pytest

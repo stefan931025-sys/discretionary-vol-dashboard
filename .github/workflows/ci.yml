@@ -23,7 +23,7 @@ jobs:
       - name: Install Dependencies & Quality Tools
         run: |
           python -m pip install --upgrade pip
-          pip install numpy pandas yfinance arch tensorflow keras streamlit plotly pytest pytest-cov flake8 mypy bandit
+          pip install numpy pandas yfinance arch tensorflow keras streamlit plotly scikit-learn pytest pytest-cov flake8 mypy bandit
 
       - name: Run Linting (Flake8)
         run: |
@@ -38,7 +38,6 @@ jobs:
       - name: Run App / Validation Check
         run: |
           export PYTHONPATH=src:.
-          # Runs app in headless/import check mode or executes volatility engine script if app.py runs continuously
           python -c "import app" || python app.py --ci || true
 
       - name: Run Pytest Suite

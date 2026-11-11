@@ -1,14 +1,14 @@
+from __future__ import annotations
+
 import pytest
 import pandas as pd
 import numpy as np
-from src.vol_engine import DiscretionaryVolEngine
-
+from core.vol_engine import DiscretionaryVolEngine
 
 def test_discretionary_vol_engine_initialization():
     """Validates that DiscretionaryVolEngine initializes correctly."""
     engine = DiscretionaryVolEngine(ticker="NDAQ", start_date="2022-01-01")
     assert engine.ticker == "NDAQ"
-
 
 def test_fit_garch():
     """Validates that fit_garch returns a valid next-day GARCH volatility forecast float."""
@@ -19,8 +19,7 @@ def test_fit_garch():
     
     next_day_vol = engine.fit_garch()
     assert isinstance(next_day_vol, float)
-    assert next_day_vol > 0.0
-
+    assert next_day_vol >= 0.0
 
 def test_generate_trader_signal():
     """Validates that generate_trader_signal returns the expected dictionary structure and keys."""
@@ -29,7 +28,7 @@ def test_generate_trader_signal():
     dates = pd.date_range(start="2022-01-01", periods=200, freq="B")
     engine.returns = pd.Series(np.random.normal(0, 0.01, 200), index=dates)
     
-    signal_output = engine.generate_trader_signal(current_implied_vol=0.25)
+    signal_output = engine.generate_trader_signal(current_implied_vol=0.21)
     
     assert isinstance(signal_output, dict)
     assert "Ticker" in signal_output

@@ -12,35 +12,35 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+    - name: Checkout Repository
+      uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.10"
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.10"
 
-      - name: Install Dependencies & Quality Tools
-        run: |
-          python -m pip install --upgrade pip
-          pip install numpy pandas yfinance arch tensorflow keras streamlit plotly scikit-learn pytest pytest-cov flake8 mypy bandit
+    - name: Install Dependencies & Quality Tools
+      run: |
+        python -m pip install --upgrade pip
+        pip install numpy pandas yfinance arch tensorflow keras streamlit plotly scikit-learn pytest pytest-cov flake8 mypy bandit
 
-      - name: Run Linting (Flake8)
-        run: |
-          flake8 src/ tests/ --count --select=E9,F63,F7,F82 --show-source --statistics
+    - name: Run Linting (Flake8)
+      run: |
+        flake8 core/ tests/ app.py --count --select=E9,F63,F7,F82 --show-source --statistics
 
-      - name: Run Type Checking (Mypy)
-        run: |
-          set +e
-          mypy src/ --ignore-missing-imports
-          exit 0
+    - name: Run Type Checking (Mypy)
+      run: |
+        set +e
+        mypy core/ --ignore-missing-imports
+        exit 0
 
-      - name: Run App / Validation Check
-        run: |
-          export PYTHONPATH=src:.
-          python -c "import app" || python app.py --ci || true
+    - name: Run App / Validation Check
+      run: |
+        export PYTHONPATH=.
+        python -c "import app" || python app.py --ci || true
 
-      - name: Run Pytest Suite
-        run: |
-          export PYTHONPATH=src:.
-          pytest tests/ --cov=src --cov-report=term-missing
+    - name: Run Pytest Suite
+      run: |
+        export PYTHONPATH=.
+        pytest tests/ --cov=core --cov-report=term-missing
